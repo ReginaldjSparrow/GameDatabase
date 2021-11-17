@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/client/css/enter.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/client/js/writegame.js" async></script>
+            <title>Game Information Input Form</title>
+    </head>
+    <body>
+        <h1>Game Information Input Form</h1>
+        <nav>
+            <ul>
+                <li><a href="http://localhost:3000/">Home</a></li>
+                <li><a href="http://localhost:3000/insertform">Input your Game</a></li>
+                <li><a href="http://localhost:3000/retrieve">Game List</a></li>
+            </ul>
+        </nav>
+        <div id="inputformcss" class="wrapper">
+            <form id="inputForm">
+                <label for="gameTitle">Game Title:</label><br>
+                <input type="text" id="gameTitle" name="gameTitle" value=""><br>
+                <label for="console">Console:</label><br>
+                <input type="text" id="console" name="console" value=""><br>
+                <label for="category">Category:</label><br>
+                <input type="text" id="category" name="category" value=""><br>
+                <label for="esrb">ESRB:</label><br>
+                <input type="text" id="esrb" name="esrb" value=""><br>
+                <label for="rating">Rating:</label><br>
+                <input type="text" id="rating" name="rating" value=""><br>
+                <label for="review">Review:</label><br>
+                <input type="text" id="review" name="review" value=""><br><br>
+                <button id="data-submit">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>
