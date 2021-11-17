@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+     <head>
+        <title>Retrieve</title>
+        <link rel="stylesheet" href="/client/css/enter.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         <script src= "/client/js/retrieveinfo.js" async></script>
+         <div class="wrapper">
+          <h1>Game Library</h1>
+    </head>
+    <nav>
+      <ul>
+        <li><a href="http://localhost:3000/">Home</a></li>
+        <li><a href="http://localhost:3000/insertform">Input your Game</a></li>
+        <li><a href="http://localhost:3000/retrieve">Game List</a></li>
+      </ul>
+      </nav>
+    <main class="page-content">
+        <div class="homegame"></div>
+        <body>
+            <table id="gametable" class="table">
+              <thead>
+                <tr>
+                  <th>Game Title</th>
+                  <th>Console</th>
+                  <th>Category</th>
+                  <th>ESRB</th>
+                  <th>Rating</th>
+                  <th>Review</th>
+                  <th></th>
+                </thead>
+                  <tbody id="tablebody">
+
+                </tbody>
+              </table>
+    </body>
+    </main>
+</html>
