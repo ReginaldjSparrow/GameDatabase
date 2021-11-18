@@ -1,6 +1,5 @@
 usewhenneeded();
 
-
 function usewhenneeded(){
 $.ajax({
     url:"http://localhost:3000/getinfo",
@@ -56,11 +55,11 @@ function displaytable(dataarray) {
 
 function deleteButtonFunc() {
     $('.delete-button').click(function() {
-        var gameID = this.getAttribute('data-id');
+        var id = this.getAttribute('data-id');
         $.ajax({
             url:"http://localhost:3000/deleteinfo",
             type: 'delete',
-            data: {id: gameID},
+            data: {id: id},
             success: function(responce) {
                 var returnData = JSON.parse(responce);
 

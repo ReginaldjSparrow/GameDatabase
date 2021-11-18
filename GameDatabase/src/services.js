@@ -13,7 +13,7 @@ var services = function(app) {
             esbr: req.body.esbr,
             rating: req.body.rating,
             review: req.body.review,
-        }
+        };
 
         console.log("Data: " + JSON.stringify(gameData));
 
@@ -32,7 +32,7 @@ var services = function(app) {
                         if(err) {
                             res.send(JSON.stringify({msg: err}));
                         } else {
-                            res.send(JSON.stringify({msg: "SUCCESS"}))
+                            res.send(JSON.stringify({msg: "SUCCESS"}));
                         }
                 
                     });
@@ -45,7 +45,7 @@ var services = function(app) {
                 if(err) {
                     res.send(JSON.stringify({msg: err}));
                 } else {
-                    res.send(JSON.stringify({msg: "SUCCESS"}))
+                    res.send(JSON.stringify({msg: "SUCCESS"}));
                 }
         
             });
@@ -69,34 +69,33 @@ var services = function(app) {
         }
     });
 
-    app.delete('/deleteinfo',function(req, res) {
+    app.delete('/deleteinfo', function(req, res) {
+        var id = req.body.id;
         fs.readFile(FILENAME, "utf8", function(err, data) {
             if(err) {
                  res.send(JSON.stringify({msg: err}));
             } else {
                 libraryData = JSON.parse(data);
-                const gamearray = [data];
-                var id = gamearray.indexOf("id");
-                for(i=0; i<id; i++) {
+                for(i=0; i<libraryData; i++) {
                     if (i != id) {
-                        i++
+                        i++;
                     } else if (i == id) {
-                        gamearray.splice(indexOf(i), 1);
+                        libraryData.splice(libraryData.indexOf(i), 1);
                     }
                 }
-                console.log(gamearray);
+                
                 fs.writeFile(FILENAME, JSON.stringify(libraryData), function(err) {
                      if(err) {
                          res.send(JSON.stringify({msg: err}));
                      } else {
-                         res.send(JSON.stringify({msg: "SUCCESS"}))
+                         res.send(JSON.stringify({msg: "SUCCESS"}));
                      }
              
                  });
              }
          });
     });
-}
+};
   
 
 module.exports = services;
