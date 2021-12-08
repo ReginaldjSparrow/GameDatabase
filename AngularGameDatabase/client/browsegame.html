@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+     <head>
+        <title>Browse</title>
+        <link rel="stylesheet" href="/client/css/enter.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="/client/js/browsegame.js"></script>
+         <div class="wrapper">
+          <h1>Game Library</h1>
+    </head>
+    <nav>
+      <ul>
+        <li><a href="http://localhost:3000/">Home</a></li>
+        <li><a href="http://localhost:3000/browse">Browse Games</a></li>
+        <li><a href="http://localhost:3000/insertform">Input your Game</a></li>
+        <li><a href="http://localhost:3000/retrieve">Game List</a></li>
+      </ul>
+      </nav>
+    <main class="page-content">
+        <div class="homegame"></div>
+        <body data-ng-app="browseGamesApp" data-ng-controller="browseGamesCtrl">
+    
+            <div>
+                <label for="gameTitle">Game Title: </label>
+                <label style="margin-left: 30px; color: red;" id="gameTitle">{{obj.gameTitle}}</label>
+            </div>
+            <div>
+                <label for="console">Console: </label>
+                <label style="margin-left: 30px; color: red;" id="console">{{obj.console}}</label>
+            </div>
+            <div>
+                <label for="category">Category: </label>
+                <label style="margin-left: 30px; color: red;" id="category">{{obj.category}}</label>
+            </div>
+            <div>
+                <label for="esrb">ESRB: </label>
+                <label style="margin-left: 30px; color: red;" id="esrb">{{obj["esrb"]}}</label>
+            </div>
+            <div>
+                <label for="rating">Rating: </label>
+                <label style="margin-left: 30px; color: red;" id="rating">{{obj["rating"]}}</label>
+            </div>
+            <div>
+                <label for="review">Review: </label>
+                <label style="margin-left: 30px; color: red;" id="review">{{obj["review"]}}</label>
+            </div>
+            <div>
+                <button id="previous" data-ng-click="changeGame(-1)" data-ng-hide="hidePrev">Previous</button>
+                <button id="next" data-ng-click="changeGame(1)" data-ng-hide="hideNext">Next</button>  
+            </div>
+    </main>
+</html>

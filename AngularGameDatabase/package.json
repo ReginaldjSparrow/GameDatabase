@@ -1,0 +1,14 @@
+{
+  "name": "gameslab",
+  "version": "1.0.0",
+  "description": "games for lab10",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christopher Cordoma",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

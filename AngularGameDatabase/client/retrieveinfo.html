@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+     <head>
+        <title>Retrieve</title>
+        <link rel="stylesheet" href="/client/css/enter.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="./js/retrieveinfo.js"></script>
+         <div class="wrapper">
+          <h1>Game Library</h1>
+    </head>
+    <nav>
+      <ul>
+        <li><a href="http://localhost:3000/">Home</a></li>
+        <li><a href="http://localhost:3000/browse">Browse Games</a></li>
+        <li><a href="http://localhost:3000/insertform">Input your Game</a></li>
+        <li><a href="http://localhost:3000/retrieve">Game List</a></li>
+      </ul>
+      </nav>
+    <main class="page-content">
+        <div class="homegame"></div>
+        <body data-ng-app="getGameApp" data-ng-controller="getGameCtrl">
+          <div>
+            <table>
+              <tr>
+                <th>Game Title</th>
+                <th>Console</th>
+                <th>Category</th>
+                <th>ESRB</th>
+                <th>Rating</th>
+                <th>Review</th>
+              </tr>
+    
+              <tr data-ng-repeat="obj in spells">
+                <td>{{ obj['game-title'] }}</td>
+                <td>{{ obj.console }}</td>
+                <td>{{ obj.category }}</td>
+                <td>{{ obj.esrb }}</td>
+                <td>{{ obj.rating }}</td>
+                <td>{{ obj.review }}</td>
+                <td><button data-ng-click="deleteGame(obj['game-title'])">DELETE</button></td>
+              </tr>
+    
+    
+            </table>
+          </div>
+    </body>
+    </main>
+</html>

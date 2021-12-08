@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/client/css/enter.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="/client/js/writegame.js"></script>
+        <div class="wrapper">
+            <title>Game Information Input Form</title>
+    </head>
+    <body data-ng-app="addGameApp" data-ng-controller="addGameCtrl">
+        <h1>Game Information Input Form</h1>
+        <nav>
+            <ul>
+                <li><a href="http://localhost:3000/">Home</a></li>
+                <li><a href="http://localhost:3000/browse">Browse Games</a></li>
+                <li><a href="http://localhost:3000/insertform">Input your Game</a></li>
+                <li><a href="http://localhost:3000/retrieve">Game List</a></li>
+            </ul>
+        </nav>
+        <main class="page-content">
+        <div id="gamefourm">
+            <label for="gameTitle">Game Title: </label>
+            <input type="text" id="gameTitle" data-ng-model="gameTitle" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="console">Console: </label>
+            <input type="text" id="console" data-ng-model="console" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="category">Category: </label>
+            <input type="text" id="category" data-ng-model="category" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="esrb">ESRB: </label>
+            <input type="text" id="esrb" data-ng-model="esrb" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="rating">Rating: </label>
+            <input type="text" id="rating" data-ng-model="rating" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="review">Review: </label>
+            <input type="text" id="review" data-ng-model="review" data-ng-change="startNew()">
+        </div>
+        <div>
+            <button id="submit" data-ng-click="submitSpell()">Submit</button>
+            <div style="margin-top: 20px; font-size: 34px; color: green;">
+                {{addGame}}
+            </div>
+        </div>
+        </main>
+    </body>
+</html>
