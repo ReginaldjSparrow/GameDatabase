@@ -3,9 +3,9 @@ var app = angular.module("addGameApp", []);
 app.controller('addGameCtrl', function($scope, $http) {
     $scope.addResults = " ";
 
-    $scope.submitSpell = function() {
+    $scope.submitGame = function() {
         if($scope.name === "" || $scope.type === "" || $scope.effect === "") {
-            $scope.addResults = "Game Title, Console, Category, ESRB, Rating, and Review are required";
+            $scope.addResults = "Game Title, Game Console, Category, ESRB, Rating, and Review are required";
             return;
         }
 
@@ -14,7 +14,7 @@ app.controller('addGameCtrl', function($scope, $http) {
             url: "http://localhost:3000/writeinfo",
             data: {
                 "gameTitle": $scope.gameTitle,
-                "console": $scope.console,
+                "gameConsole": $scope.gameConsole,
                 "category": $scope.category,
                 "esrb": $scope.esrb,
                 "rating": $scope.rating,
@@ -24,7 +24,7 @@ app.controller('addGameCtrl', function($scope, $http) {
             if(responce.data.msg === "SUCCESS") {
                 $scope.addResults = "Game Is Added!";
                 $scope.gameTitle = "";
-                $scope.console = "";
+                $scope.gameConsole = "";
                 $scope.category = "";
                 $scope.esrb = "";
                 $scope.rating = "";

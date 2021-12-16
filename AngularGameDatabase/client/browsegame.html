@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="/client/css/enter.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <script src="/client/js/browsegame.js"></script>
-         <div class="wrapper">
+        <div class="wrapper">
           <h1>Game Library</h1>
     </head>
     <nav>
@@ -19,14 +19,14 @@
     <main class="page-content">
         <div class="homegame"></div>
         <body data-ng-app="browseGamesApp" data-ng-controller="browseGamesCtrl">
-    
+                <main class="page-content">
             <div>
                 <label for="gameTitle">Game Title: </label>
                 <label style="margin-left: 30px; color: red;" id="gameTitle">{{obj.gameTitle}}</label>
             </div>
             <div>
-                <label for="console">Console: </label>
-                <label style="margin-left: 30px; color: red;" id="console">{{obj.console}}</label>
+                <label for="gameConsole">gameConsole: </label>
+                <label style="margin-left: 30px; color: red;" id="gameConsole">{{obj.gameConsole}}</label>
             </div>
             <div>
                 <label for="category">Category: </label>
@@ -48,5 +48,6 @@
                 <button id="previous" data-ng-click="changeGame(-1)" data-ng-hide="hidePrev">Previous</button>
                 <button id="next" data-ng-click="changeGame(1)" data-ng-hide="hideNext">Next</button>  
             </div>
+        </body>
     </main>
 </html>

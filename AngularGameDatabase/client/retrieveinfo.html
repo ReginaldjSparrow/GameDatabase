@@ -4,7 +4,7 @@
         <title>Retrieve</title>
         <link rel="stylesheet" href="/client/css/enter.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <script src="./js/retrieveinfo.js"></script>
+        <script src="/client/js/retrieveinfo.js"></script>
          <div class="wrapper">
           <h1>Game Library</h1>
     </head>
@@ -19,30 +19,70 @@
     <main class="page-content">
         <div class="homegame"></div>
         <body data-ng-app="getGameApp" data-ng-controller="getGameCtrl">
+        <section>
+                <div>
+                  <label for="groupby">Game Console:</label>
+                  <select id="groupby" data-ng-model="selectedGameConsole" data-ng-options="gameConsole.display for gameConsole in gameConsoles" data-ng-change="redrawTable()"></select>
+                </div>
           <div>
             <table>
               <tr>
                 <th>Game Title</th>
-                <th>Console</th>
+                <th>Game Console</th>
                 <th>Category</th>
                 <th>ESRB</th>
                 <th>Rating</th>
                 <th>Review</th>
               </tr>
     
-              <tr data-ng-repeat="obj in spells">
-                <td>{{ obj['game-title'] }}</td>
-                <td>{{ obj.console }}</td>
+              <tr data-ng-repeat="obj in games">
+                <td>{{ obj.gameTitle }}</td>
+                <td>{{ obj.gameConsole }}</td>
                 <td>{{ obj.category }}</td>
                 <td>{{ obj.esrb }}</td>
                 <td>{{ obj.rating }}</td>
                 <td>{{ obj.review }}</td>
-                <td><button data-ng-click="deleteGame(obj['game-title'])">DELETE</button></td>
+                <td><button data-ng-click="deleteGame(obj['_id'])">DELETE</button></td>
+                <td><button data-ng-click="editGame($index)">EDIT</button></td>
               </tr>
     
     
             </table>
           </div>
+        </section>
+        <section data-ng-hide="hideForm">
+          <label data-ng-model="gameID" hidden></label>
+          <div>
+            <label for="gameTitle">Game Title: </label>
+            <input type="text" id="gameTitle" data-ng-model="gameTitle" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="gameConsole">Game Console: </label>
+            <input type="text" id="gameConsole" data-ng-model="gameConsole" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="category">Category: </label>
+            <input type="text" id="category" data-ng-model="category" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="esrb">ESRB: </label>
+            <input type="text" id="esrb" data-ng-model="esrb" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="rating">Rating: </label>
+            <input type="text" id="rating" data-ng-model="rating" data-ng-change="startNew()">
+        </div>
+        <div>
+            <label for="review">Review: </label>
+            <input type="text" id="review" data-ng-model="review" data-ng-change="startNew()">
+        </div>
+          <div>
+            <button id="submit" data-ng-click="updateGame()">Update</button>
+          </div>
+          <div>
+            <button id="submit" data-ng-click="cancelUpdate()">Cancel</button>
+          </div>
+        </section>
     </body>
     </main>
 </html>
