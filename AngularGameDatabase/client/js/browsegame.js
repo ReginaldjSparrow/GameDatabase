@@ -2,9 +2,7 @@ var games = [];
 var activeGame = 0;
 
 var app = angular.module("browseGamesApp", []);
-console.log('something');
 app.controller('browseGamesCtrl', function($scope, $http) {
-    console.log('something23');
     $scope.obj = [];
     $scope.get_records = function() {
         $http({
@@ -12,6 +10,7 @@ app.controller('browseGamesCtrl', function($scope, $http) {
             url: "http://localhost:3000/getinfo"
         }).then(function(responce) {
             if(responce.data.msg === "SUCCESS") {
+                console.log(responce.data.gameDatabase);
                 games = responce.data.gameDatabase;
                 $scope.obj = games[activeGame];
                 $scope.showhide();

@@ -1,101 +1,165 @@
-const fs = require('fs');
+const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectId;
 
-const FILENAME = './files/library.txt';
+//Define Database URL
+
+const dbURL = process.env.DB_URI || "mongodb://localhost";
 
 var services = function(app) {
     app.post('/writeinfo', function(req, res) {
-        var id = "game" + Date.now();
-        var gameData = {
-            id: id,
-            gameTitle: req.body.gameTitle,
-            console: req.body.console,
-            category: req.body.category,
-            esbr: req.body.esbr,
-            rating: req.body.rating,
-            review: req.body.review,
-        };
+        var gameTitle = req.body.gameTitle;
+        var gameConsole = req.body.gameConsole;
+        var category = req.body.category;
+        var esrb = req.body.esrb;
+        var rating = req.body.rating;
+        var review = req.body.review;
 
-        console.log("Data: " + JSON.stringify(gameData));
+        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) {
+            if(err) {
+                return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+            } else {
+                var dbo = client.db("gamedatabase");
 
-        var libraryData = [];
-
-        if(fs.existsSync(FILENAME)) {
-            fs.readFile(FILENAME, "utf8", function(err, data) {
-               if(err) {
-                    res.send(JSON.stringify({msg: err}));
-               } else {
-                   libraryData = JSON.parse(data);
-
-                   libraryData.push(gameData);
-               
-                   fs.writeFile(FILENAME, JSON.stringify(libraryData), function(err) {
-                        if(err) {
-                            res.send(JSON.stringify({msg: err}));
+                var search = {title: gameTitle};
+                dbo.collection("games").find(search).toArray(function(err, data) {
+                    if(err) {
+                        return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+                    } else {
+                        if(data.length >0) {
+                            return res.status(200).send(JSON.stringify({msg: "Game Already Exists"}));
                         } else {
-                            res.send(JSON.stringify({msg: "SUCCESS"}));
+                            var newGame = {
+                                gameTitle: gameTitle,
+                                gameConsole: gameConsole,
+                                category: category,
+                                esrb: esrb,
+                                rating: rating,
+                                review: review
+                            };
+                            dbo.collection("games").insertOne(newGame, function(err) {
+                                if(err) {
+                                    return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+                                } else {
+                                    return res.status(200).send(JSON.stringify({msg: "SUCCESS"}));
+                                }
+                            });
                         }
-                
-                    });
-                }
-            });
-        } else {
-            libraryData.push(gameData);
+                    }
+                });
+            }
+        });
 
-            fs.writeFile(FILENAME, JSON.stringify(libraryData), function(err) {
-                if(err) {
-                    res.send(JSON.stringify({msg: err}));
-                } else {
-                    res.send(JSON.stringify({msg: "SUCCESS"}));
-                }
-        
-            });
-        }
     });
 
     app.get('/getinfo', function(req, res) {
-        if(fs.existsSync(FILENAME)) {
-            fs.readFile(FILENAME, "utf8", function(err, data) {
-               if(err) {
-                    res.send(JSON.stringify({msg: err}));
-               } else {
-                   libraryData = JSON.parse(data);
-                   console.log(JSON.stringify(libraryData));              
-                     res.send(JSON.stringify({msg: "SUCCESS", gameDatabase: libraryData}));                      
-                }
-            });
-        } else {
-            blankArray=[];
-            res.send(JSON.stringify({msg: "SUCCESS", gameDatabase: blankArray}));
+
+        MongoClient.connect(dbURL, { useUnifiedTopology: true }, function(err, client) {
+            if(err) {
+                return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+            } else {
+                var dbo = client.db("gamedatabase");
+
+                dbo.collection("games").find().toArray(function(err, data) {
+                    if(err) {
+                        client.close();
+                        return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+                    } else{
+                        client.close();
+                        console.log(data);
+                        return res.status(200).send(JSON.stringify({msg: "SUCCESS", gameDatabase:data}));
+                    }
+                });
+            }
+        });
+    });
+
+    app.get("/getinfoByGameConsole", function(req, res) {
+        var gameConsole = req.query.gameConsole;
+        var search = (gameConsole === "") ? { }:{gameConsole: req.query.gameConsole};
+
+        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) {
+            if(err) {
+                return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+            } else {
+                var dbo = client.db("gamedatabase");
+
+                dbo.collection("games").find(search).toArray(function(err, data) {
+                    if(err) {
+                        client.close();
+                        return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+                    } else{
+                        client.close();
+                        return res.status(200).send(JSON.stringify({msg: "SUCCESS", gameDatabase:data}));
+                    }
+                });
+            }
+        });
+    });
+
+    app.put('/updateinfo', function(req, res) {
+        var gameID = req.body.gameID;
+        var gameTitle = req.body.gameTitle;
+        var gameConsole = req.body.gameConsole;
+        var category = req.body.category;
+        var esrb = req.body.esrb;
+        var rating = req.body.rating;
+        var review = req.body.review;
+        var g_id = new ObjectId(gameID);
+        var search = {_id: g_id};
+        var updateData = {
+            $set: {
+                gameTitle: gameTitle,
+                gameConsole: gameConsole,
+                category: category,
+                esrb: esrb,
+                rating: rating,
+                review: review
+            }
         }
+
+        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) {
+            if(err) {
+                return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+            } else {
+                var dbo = client.db("gamedatabase");
+
+                dbo.collection("games").updateOne(search, updateData, function(err) {
+                    if(err) {
+                        client.close();
+                        return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+                    } else{
+                        client.close();
+                        return res.status(200).send(JSON.stringify({msg: "SUCCESS"}));
+                    }
+                });
+            }
+        });
     });
 
     app.delete('/deleteinfo', function(req, res) {
-        var id = req.body.id;
-        fs.readFile(FILENAME, "utf8", function(err, data) {
+        var gameID = req.query.gameID;
+        var g_id = new ObjectId(gameID);
+        search = {_id: g_id};
+console.log(gameID);
+        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) {
             if(err) {
-                 res.send(JSON.stringify({msg: err}));
+                return res.status(201).send(JSON.stringify({msg: "Error" + err}));
             } else {
-                libraryData = JSON.parse(data);
-                for(i=0; i<libraryData; i++) {
-                    if (i != id) {
-                        i++;
-                    } else if (i == id) {
-                        libraryData.splice(indexOf.id, 7);
+                var dbo = client.db("gamedatabase");
+
+                dbo.collection("games").deleteOne(search, function(err) {
+                    if(err) {
+                        client.close();
+                        return res.status(201).send(JSON.stringify({msg: "Error" + err}));
+                    } else{
+                        client.close();
+                        return res.status(200).send(JSON.stringify({msg: "SUCCESS"}));
                     }
-                }
-                
-                fs.writeFile(FILENAME, JSON.stringify(libraryData), function(err) {
-                     if(err) {
-                         res.send(JSON.stringify({msg: err}));
-                     } else {
-                         res.send(JSON.stringify({msg: "SUCCESS"}));
-                     }
-             
-                 });
-             }
-         });
+                });
+            }
+        });
     });
-};
+}
   
 
 module.exports = services;

@@ -23,8 +23,8 @@
             <input type="text" id="gameTitle" data-ng-model="gameTitle" data-ng-change="startNew()">
         </div>
         <div>
-            <label for="console">Console: </label>
-            <input type="text" id="console" data-ng-model="console" data-ng-change="startNew()">
+            <label for="gameConsole">Game Console: </label>
+            <input type="text" id="gameConsole" data-ng-model="gameConsole" data-ng-change="startNew()">
         </div>
         <div>
             <label for="category">Category: </label>
@@ -43,10 +43,10 @@
             <input type="text" id="review" data-ng-model="review" data-ng-change="startNew()">
         </div>
         <div>
-            <button id="submit" data-ng-click="submitSpell()">Submit</button>
-            <div style="margin-top: 20px; font-size: 34px; color: green;">
-                {{addGame}}
-            </div>
+            <button id="submit" data-ng-click="submitGame()">Submit</button>
+        <div style="margin-top: 20px; font-size: 34px; color: green;">
+            {{addResults}}
+        </div>
         </div>
         </main>
     </body>
